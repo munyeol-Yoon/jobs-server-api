@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { validationSchema } from './config/validation.schema';
 import { Job } from './job/entity/job.entity';
 import { JobModule } from './job/job.module';
 
@@ -11,16 +11,7 @@ import { JobModule } from './job/job.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: Joi.object({
-        ENV: Joi.string().valid('dev', 'prod').required(),
-        PORT: Joi.string().required(),
-        DB_TYPE: Joi.string().valid('postgres').required(),
-        DB_HOST: Joi.string().required(),
-        DB_PORT: Joi.number().required(),
-        DB_USERNAME: Joi.string().required(),
-        DB_PASSWORD: Joi.string().required(),
-        DB_DATABASE: Joi.string().required(),
-      }),
+      validationSchema,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
