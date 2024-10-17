@@ -9,4 +9,8 @@ export class JobService {
     @InjectRepository(Job)
     private readonly jobRepository: Repository<Job>,
   ) {}
+
+  async findAllJob() {
+    return await this.jobRepository.find();
+  }
 }
