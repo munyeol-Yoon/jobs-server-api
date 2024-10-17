@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Job } from './job/entity/job.entity';
 import { JobModule } from './job/job.module';
 
 @Module({
@@ -29,7 +30,7 @@ import { JobModule } from './job/job.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [],
+        entities: [Job],
         synchronize: true,
       }),
       inject: [ConfigService],
